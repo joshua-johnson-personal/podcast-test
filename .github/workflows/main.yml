@@ -9,12 +9,8 @@ jobs:
               uses: actions/checkout@v4
             - name: Increase version
               run: |
-                old_version=$(grep -oP '(?<=0.0.)[0-99]+' contrib/_version.py)
-                new_version=$(($old_version + 1))
-                str="__version__=\"0.0."
-                out="$str$new_version\""
-                sed -i '1s/.*/'$out'/' contrib/_version.py
-
+               python -m pip install --upgrade pip
+               pip install pyyaml
             - name: Run Feed Generator
               run: python feed.py
             - name: Push Repo
