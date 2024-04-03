@@ -8,7 +8,7 @@ jobs:
             - name: checkout repo
               uses: actions/checkout@v4
             - name: Run Feed Generator
-              uses: joshua.johnson.personal/podcast-generator@main
+              uses: https://github.com/joshua-johnson-personal/podcast-generator@main
               
 
             
