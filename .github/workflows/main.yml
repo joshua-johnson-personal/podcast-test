@@ -1,27 +1,28 @@
 name: Generate Podcast Feeds
 on: [push]
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-        - name: Checkout Repo
-          uses: actions/checkout@v3
-          
-        - name: Setup Python
-          run: |
-            old_version=$(grep -oP '(?<=0.0.)[0-99]+' contrib/_version.py)
-            new_version=$(($old_version + 1))
-            str="__version__=\"0.0."
-            out="$str$new_version\""
-            sed -i '1s/.*/'$out'/' contrib/_version.py
-            
-        - name: Run Feed Generator
-          run: python feed.py
-          -name: Push Repo
-          run: |
-            git config user.name github-actions
-            git config user.email github-actions@github.com
-            git add .
-            git commit -m "Modified Feed"
-            git push
+    job1:
+        name: Update version
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout repo
+              uses: actions/checkout@v3
+
+            - name: Increase version
+              run: |
+                old_version=$(grep -oP '(?<=0.0.)[0-99]+' contrib/_version.py)
+                new_version=$(($old_version + 1))
+                str="__version__=\"0.0."
+                out="$str$new_version\""
+                sed -i '1s/.*/'$out'/' contrib/_version.py
+
+            - name: Run Feed Generator
+              run: python feed.py
+            - name: Push Repo
+              run: |
+                  git config user.name github-actions
+                  git config user.email github-actions@github.com
+                  git add .
+                  git commit -m "Modified Feed"
+                  git push
             
