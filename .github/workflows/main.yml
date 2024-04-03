@@ -7,7 +7,6 @@ jobs:
         - name: Checkout Repo
           uses: actions/checkout@v3
         - name: Setup Python
-          uses: actions/setup-python@v4
           run: |
             old_version=$(grep -oP '(?<=0.0.)[0-99]+' contrib/_version.py)
             new_version=$(($old_version + 1))
