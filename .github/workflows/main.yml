@@ -6,6 +6,7 @@ jobs:
     steps:
         - name: Checkout Repo
           uses: actions/checkout@v3
+          
         - name: Setup Python
           run: |
             old_version=$(grep -oP '(?<=0.0.)[0-99]+' contrib/_version.py)
@@ -13,6 +14,7 @@ jobs:
             str="__version__=\"0.0."
             out="$str$new_version\""
             sed -i '1s/.*/'$out'/' contrib/_version.py
+            
         - name: Run Feed Generator
           run: python feed.py
           -name: Push Repo
